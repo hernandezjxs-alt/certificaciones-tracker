@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap de Certificaciones</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f1f5f9; --surface: #ffffff; --surface-2: #f8fafc; --border: #e2e8f0;
+    --text: #0f172a; --muted: #64748b; --faint: #94a3b8;
+    --primary: #2563eb; --primary-soft: #dbeafe;
+    --ok: #16a34a; --ok-soft: #dcfce7; --warn: #d97706; --warn-soft: #fef3c7; --bad: #dc2626; --bad-soft: #fee2e2;
+    --role-data: #f59e0b; --role-bi: #e11d48; --role-google: #059669; --role-sap: #2563eb;
+    --shadow: 0 1px 2px rgba(15,23,42,.06), 0 4px 14px rgba(15,23,42,.05);
+    --shadow-lg: 0 10px 30px rgba(15,23,42,.14);
+    --hero: linear-gradient(135deg, #0f172a 0%, #1e293b 55%, #1e3a8a 130%);
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b1220; --surface: #131c2f; --surface-2: #19243b; --border: #25324d;
+    --text: #e6ecf5; --muted: #94a3b8; --faint: #64748b;
+    --primary: #60a5fa; --primary-soft: #1e3a8a55;
+    --ok: #4ade80; --ok-soft: #14532d66; --warn: #fbbf24; --warn-soft: #78350f66; --bad: #f87171; --bad-soft: #7f1d1d66;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 4px 14px rgba(0,0,0,.25);
+    --shadow-lg: 0 10px 30px rgba(0,0,0,.5);
+    --hero: linear-gradient(135deg, #060b16 0%, #0f1a30 55%, #172554 130%);
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; transition: background .25s, color .25s; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 6px; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  /* HERO */
+  .hero { background: var(--hero); color: #fff; padding: 30px 0 64px; }
+  .hero-top { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center; }
+  .hero h1 { margin: 0; font-size: clamp(22px, 3vw, 32px); font-weight: 800; letter-spacing: -.02em; }
+  .hero p { margin: 6px 0 0; color: #cbd5e1; max-width: 640px; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: rgba(96,165,250,.18); color: #93c5fd; border: 1px solid rgba(96,165,250,.35); vertical-align: middle; margin-left: 8px; }
+  .author { display: inline-flex; gap: 8px; align-items: center; font: 600 13px ui-monospace, Consolas, monospace; color: #ecfdf5; background: rgba(16,185,129,.28); border: 1px solid rgba(52,211,153,.7); padding: 7px 14px; border-radius: 9px; }
+  .author b { color: #fff; text-decoration: underline; text-decoration-color: #34d399; text-underline-offset: 3px; }
+  .author .dt { color: #a7f3d0; font-weight: 500; padding-left: 8px; border-left: 1px solid rgba(255,255,255,.3); }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .btn-ghost { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; padding: 8px 13px; border-radius: 9px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); color: #e2e8f0; transition: .15s; }
+  .btn-ghost:hover { background: rgba(255,255,255,.16); }
+  .btn-ghost.danger:hover { background: rgba(220,38,38,.25); border-color: rgba(248,113,113,.5); }
+
+  /* ROLE CHIPS */
+  .roles { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 22px; }
+  .roles-label { font-size: 12px; font-weight: 600; color: #94a3b8; margin-right: 4px; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); color: #e2e8f0; transition: .15s; }
+  .chip:hover { background: rgba(255,255,255,.14); }
+  .chip .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--c, #94a3b8); }
+  .chip .n { font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 999px; background: rgba(255,255,255,.14); }
+  .chip.active { background: var(--c, #fff); border-color: transparent; color: #fff; box-shadow: 0 4px 14px rgba(0,0,0,.3); }
+  .chip.active[data-role="ALL"] { background: #fff; color: #0f172a; }
+  .chip.active .dot { background: #fff; }
+  .chip.active .n { background: rgba(0,0,0,.2); }
+  .chip.active[data-role="ALL"] .n { background: #e2e8f0; }
+
+  /* KPI */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: -40px; position: relative; }
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); }
+  .kpi { padding: 18px; display: flex; flex-direction: column; gap: 4px; min-height: 124px; }
+  .kpi-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .kpi-value { font-size: 28px; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+  .kpi-sub { font-size: 12px; color: var(--muted); }
+  .kpi { border-left: 4px solid var(--k); }
+  .kpi.k-blue .kpi-value { color: var(--primary); font-size: 34px; }
+  .kpi .bar { margin-top: auto; height: 8px; }
+  .kpi .bar > div { background: var(--primary); }
+  .states { display: flex; justify-content: space-between; margin-top: 8px; }
+  .states .lbl { display: block; font-size: 12px; font-weight: 800; }
+  .states .lbl.w { color: var(--warn); } .states .lbl.g { color: var(--ok); }
+  .states b { font-size: 22px; font-weight: 800; }
+  .top-actions { display: flex; gap: 8px; align-items: center; margin-left: auto; }
+  .by-wrap { position: relative; }
+  .by-btn { font-size: 12px; letter-spacing: .08em; padding: 9px 14px; color: #6ee7b7; border-color: rgba(52,211,153,.5); }
+  .by-btn[aria-expanded="true"] { background: rgba(16,185,129,.3); }
+  .pop { position: absolute; top: calc(100% + 8px); right: 0; z-index: 70; width: 290px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 14px; padding: 14px; box-shadow: var(--shadow-lg); }
+  .pop label { display: block; font-size: 12px; font-weight: 700; color: var(--muted); margin: 0 0 4px; }
+  .pop { width: 300px; padding: 16px; }
+  .pop::before { content: ""; position: absolute; top: -6px; right: 22px; width: 11px; height: 11px; background: var(--surface); border-left: 1px solid var(--border); border-top: 1px solid var(--border); transform: rotate(45deg); }
+  .actions .by-wrap, .actions .theme-btn { order: 5; }
+  .pop.arrow-left::before { right: auto; left: 18px; }
+  .by-head { display: flex; align-items: center; gap: 12px; }
+  .by-avatar { width: 42px; height: 42px; flex: none; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 14px; letter-spacing: .03em; color: #fff; background: linear-gradient(135deg, #2563eb, #7c3aed); box-shadow: 0 4px 12px rgba(37,99,235,.35); }
+  .by-kicker { font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .by-name { font-size: 15px; font-weight: 700; line-height: 1.25; }
+  .by-sep { height: 1px; background: var(--border); margin: 14px 0; }
+  .pop label { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; }
+  .by-date { margin: 0; color-scheme: light dark; }
+  :root[data-theme="dark"] .by-date { color-scheme: dark; }
+  .pop-date { margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+  .theme-btn { font-size: 13px; padding: 9px 16px; }
+  .log-form { display: grid; grid-template-columns: 150px 1fr; gap: 8px; margin-bottom: 8px; }
+  .log-form textarea { grid-column: 1 / -1; resize: vertical; min-height: 64px; }
+  .log-form .btn { grid-column: 1 / -1; justify-self: end; }
+  .log-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; max-height: 240px; overflow-y: auto; }
+  .log-item { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font-size: 13px; position: relative; }
+  .log-item .who { display: flex; gap: 8px; align-items: center; font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 3px; padding-right: 24px; flex-wrap: wrap; }
+  .log-item .who span { color: var(--muted); font-weight: 600; }
+  .log-item p { margin: 0; white-space: pre-wrap; }
+  .log-item button { position: absolute; top: 8px; right: 8px; border: 0; background: none; color: var(--faint); }
+  .log-item button:hover { color: var(--bad); }
+  .last-note { font-size: 12px; color: var(--muted); background: var(--surface-2); border-radius: 8px; padding: 6px 9px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  /* ROLE PROGRESS */
+  .role-prog { margin-top: 16px; padding: 16px 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .rp { cursor: pointer; text-align: left; background: none; border: 0; padding: 0; }
+  .rp-head { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; margin-bottom: 6px; }
+  .rp-head span:last-child { color: var(--muted); font-weight: 500; }
+  .bar { height: 7px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .bar > div { height: 100%; border-radius: 99px; background: var(--c); transition: width .5s; }
+  .rp:hover .rp-head span:first-child { text-decoration: underline; }
+
+  /* TOOLBAR */
+  .toolbar { position: sticky; top: 0; z-index: 30; margin-top: 18px; padding: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; backdrop-filter: blur(10px); background: color-mix(in srgb, var(--surface) 92%, transparent); }
+  .search { position: relative; flex: 1 1 260px; }
+  .search i { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--faint); font-size: 13px; }
+  .search kbd { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font: 600 11px ui-monospace, monospace; color: var(--faint); border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; }
+  .field { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 9px 12px; font-weight: 500; width: 100%; }
+  .search .field { padding-left: 36px; padding-right: 36px; }
+  select.field { width: auto; flex: 0 1 190px; }
+  .field:focus { outline: 2px solid var(--primary); outline-offset: -1px; background: var(--surface); }
+  .seg { display: inline-flex; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 3px; }
+  .seg button { border: 0; background: none; color: var(--muted); font-size: 12px; font-weight: 600; padding: 6px 11px; border-radius: 7px; display: inline-flex; gap: 6px; align-items: center; }
+  .seg button.on { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+  .seg button.on i { color: var(--primary); }
+  .meta-row { display: flex; justify-content: space-between; align-items: center; margin: 14px 2px 10px; font-size: 12px; color: var(--muted); font-weight: 500; }
+  .link-btn { background: none; border: 0; color: var(--primary); font-weight: 600; font-size: 12px; }
+  .link-btn:hover { text-decoration: underline; }
+
+  /* CARDS */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .card { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow); transition: transform .15s, box-shadow .15s; overflow: hidden; }
+  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--c); }
+  .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .card.done { background: linear-gradient(0deg, var(--ok-soft), var(--ok-soft)), var(--surface); }
+  .card-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .code-wrap { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .vicon { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; color: #fff; flex: none; font-size: 15px; }
+  .code { font: 700 12px ui-monospace, Consolas, monospace; background: var(--surface-2); border: 1px solid var(--border); padding: 3px 8px; border-radius: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .level { font-size: 10px; font-weight: 800; letter-spacing: .06em; padding: 3px 9px; border-radius: 999px; background: var(--warn-soft); color: var(--warn); white-space: nowrap; }
+  .level.PROFESIONAL { background: #e0e7ff; color: #4338ca; } .level.EXPERTO, .level.AVANZADO { background: var(--warn); color: #fff; }
+  .level.FUNDAMENTALS { background: var(--ok-soft); color: var(--ok); } .level.ESPECIALISTA { background: #fce7f3; color: #be185d; } .level.CORE { background: var(--primary-soft); color: var(--primary); }
+  :root[data-theme="dark"] .level.PROFESIONAL { background: #312e8155; color: #a5b4fc; } :root[data-theme="dark"] .level.ESPECIALISTA { background: #83184355; color: #f9a8d4; }
+  .card h3 { margin: 0; font-size: 15.5px; font-weight: 700; line-height: 1.3; }
+  .card .desc { margin: 0; color: var(--muted); font-size: 12.5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .pill { font-size: 12px; font-weight: 600; padding: 4px 9px; border-radius: 8px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); white-space: nowrap; }
+  .pill.price { background: var(--text); color: var(--bg); border-color: var(--text); font-weight: 800; }
+  .pill.date { color: var(--primary); background: var(--primary-soft); border-color: transparent; }
+  .pill.late { color: var(--bad); background: var(--bad-soft); border-color: transparent; }
+  .res { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .res a { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 7px 4px; border-radius: 10px; font-size: 10.5px; font-weight: 700; background: var(--surface-2); border: 1px solid var(--border); color: var(--muted); transition: .15s; }
+  .res a i { font-size: 15px; } .res a:hover { color: var(--c2); border-color: var(--c2); transform: translateY(-1px); }
+  .res a.o { --c2: var(--primary); } .res a.d { --c2: #0891b2; } .res a.y { --c2: #dc2626; } .res a.u { --c2: #9333ea; }
+  .card-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding-top: 12px; border-top: 1px solid var(--border); margin-top: auto; }
+  .status-seg { display: inline-flex; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 2px; }
+  .status-seg button { border: 0; background: none; padding: 5px 9px; border-radius: 8px; font-size: 11.5px; font-weight: 700; color: var(--muted); display: inline-flex; gap: 5px; align-items: center; white-space: nowrap; }
+  .status-seg button:hover { color: var(--text); }
+  .status-seg button.on[data-s="TODO"] { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+  .status-seg button.on[data-s="IN_PROGRESS"] { background: var(--warn-soft); color: var(--warn); }
+  .status-seg button.on[data-s="COMPLETED"] { background: var(--ok-soft); color: var(--ok); }
+  .details-btn { font-size: 12px; font-weight: 700; color: var(--primary); background: none; border: 0; display: inline-flex; gap: 5px; align-items: center; white-space: nowrap; }
+  .details-btn:hover { text-decoration: underline; }
+  .owner { font-size: 11px; color: var(--faint); display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .owner > span:last-child { white-space: nowrap; }
+  .people { display: flex; flex-wrap: wrap; gap: 5px; }
+  .person { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; color: var(--primary); background: var(--primary-soft); padding: 3px 9px; border-radius: 999px; }
+  .person button { border: 0; background: none; color: inherit; padding: 0; line-height: 1; opacity: .7; }
+  .person button:hover { opacity: 1; }
+  .people-add { display: flex; gap: 8px; margin-bottom: 8px; } .people-add .field { flex: 1; }
+  .people:empty::before { content: "Nadie asignada todavía"; font-size: 12px; color: var(--faint); font-weight: 400; }
+
+  /* MATRIX */
+  .matrix-block { margin-bottom: 18px; overflow: hidden; border-top: 4px solid var(--c); }
+  .matrix-block h3 { margin: 0; padding: 16px 18px 10px; font-size: 15px; display: flex; gap: 8px; align-items: center; }
+  .matrix-block h3 small { color: var(--muted); font-weight: 500; }
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 760px; }
+  th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); background: var(--surface-2); padding: 10px 14px; font-weight: 700; }
+  td { padding: 10px 14px; border-top: 1px solid var(--border); font-size: 13px; vertical-align: middle; }
+  tr:hover td { background: var(--surface-2); }
+  td.mono { font: 700 12px ui-monospace, Consolas, monospace; }
+
+  /* BOARD */
+  .board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
+  .col { background: var(--surface-2); border: 1px dashed var(--border); border-radius: 16px; padding: 12px; min-height: 220px; transition: .15s; }
+  .col.over { border-color: var(--primary); background: var(--primary-soft); }
+  .col h4 { margin: 2px 4px 12px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
+  .col h4 span { font-size: 11px; background: var(--surface); border: 1px solid var(--border); padding: 1px 8px; border-radius: 999px; color: var(--muted); }
+  .mini { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--c); border-radius: 12px; padding: 12px; margin-bottom: 10px; cursor: grab; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px; }
+  .mini.dragging { opacity: .4; }
+  .mini b { font-size: 13px; line-height: 1.3; }
+  .mini .row { display: flex; justify-content: space-between; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); }
+
+  .empty { grid-column: 1/-1; text-align: center; padding: 56px 20px; }
+  .empty i { font-size: 38px; color: var(--faint); margin-bottom: 10px; }
+  .empty p { margin: 4px 0 14px; color: var(--muted); font-weight: 500; }
+  .btn { background: var(--primary); color: #fff; border: 0; padding: 9px 16px; border-radius: 10px; font-weight: 700; font-size: 13px; }
+  .btn:hover { filter: brightness(1.1); }
+  .btn.sec { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+
+  /* MODAL */
+  .backdrop { position: fixed; inset: 0; z-index: 60; background: rgba(8,13,25,.7); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; padding: 16px; }
+  .backdrop.open { display: flex; animation: fade .15s; }
+  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; width: 100%; max-width: 680px; max-height: 92vh; overflow-y: auto; padding: 24px; box-shadow: var(--shadow-lg); position: relative; animation: pop .2s cubic-bezier(.2,.9,.3,1.2); }
+  @keyframes fade { from { opacity: 0 } } @keyframes pop { from { opacity: 0; transform: scale(.96) translateY(8px) } }
+  .x { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 50%; border: 0; background: var(--surface-2); color: var(--muted); }
+  .x:hover { color: var(--text); }
+  .modal h2 { margin: 10px 0 2px; font-size: 20px; letter-spacing: -.01em; padding-right: 30px; }
+  .modal .sub { color: var(--muted); font-size: 12px; margin: 0 0 14px; }
+  .box { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; font-size: 13px; }
+  .info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .info small { display: block; color: var(--muted); font-size: 11px; font-weight: 600; margin-bottom: 2px; }
+  .info b { font-size: 13px; }
+  .modal h5 { margin: 0 0 8px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .links { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+  .links a { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-radius: 10px; font-weight: 600; font-size: 13px; background: var(--surface-2); border: 1px solid var(--border); transition: .15s; }
+  .links a:hover { border-color: var(--c2); color: var(--c2); }
+  .form { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px; }
+  .form label, .notes label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 5px; color: var(--muted); }
+  .notes textarea { resize: vertical; min-height: 96px; }
+  .modal-foot { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+
+  /* TOAST */
+  .toasts { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 90; display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none; }
+  .toast { background: #0f172a; color: #fff; padding: 10px 16px; border-radius: 12px; font-size: 13px; font-weight: 600; box-shadow: var(--shadow-lg); display: flex; gap: 8px; align-items: center; animation: pop .2s, fade .2s reverse 2.4s forwards; border: 1px solid #334155; }
+  .toast i { color: #4ade80; }
+  footer { text-align: center; color: var(--faint); font-size: 12px; padding: 32px 0 24px; }
+
+  @media (max-width: 1000px) { .kpis { grid-template-columns: repeat(2, 1fr); } .role-prog { grid-template-columns: repeat(2, 1fr); } .board { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) {
+    .wrap { padding: 0 14px; } .kpis { grid-template-columns: 1fr; } .grid { grid-template-columns: 1fr; }
+    .info, .form { grid-template-columns: 1fr; } .links { grid-template-columns: 1fr; } .role-prog { grid-template-columns: 1fr; }
+    select.field { flex: 1 1 140px; } .seg button span { display: none; } .actions .btn-ghost span { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <div>
+        <h1>Roadmap de Certificaciones Técnicas <span class="tag">Data · BI · Nube · SAP</span></h1>
+        <p>Tu avance, inversión y tiempo de estudio en un solo lugar. Todo se guarda en este navegador.</p>
+      </div>
+      <div class="actions">
+        <div class="by-wrap">
+          <button class="btn-ghost by-btn" id="byBtn" onclick="toggleAuthor(event)" aria-haspopup="true" aria-expanded="false" title="Ver quién lo elaboró"><b>BY</b></button>
+          <div class="pop" id="authorPop" hidden onclick="event.stopPropagation()">
+            <div class="by-head">
+              <div class="by-avatar">JH</div>
+              <div>
+                <div class="by-kicker">Elaborado por</div>
+                <div class="by-name">Ing. Jesús Hernández</div>
+              </div>
+            </div>
+            <div class="by-sep"></div>
+            <label for="aDate">Fecha de elaboración</label>
+            <input class="field by-date" id="aDate" type="date" onchange="saveAuthorDate()">
+          </div>
+        </div>
+        <button class="btn-ghost theme-btn" onclick="toggleTheme()" title="Cambiar tema" aria-label="Cambiar tema"><i id="themeIcon" class="fa-solid fa-sun"></i><span id="themeLbl">Modo claro</span></button>
+        <button class="btn-ghost" onclick="exportJSON()"><i class="fa-solid fa-download" style="color:#38bdf8"></i><span>Exportar</span></button>
+        <label class="btn-ghost" style="cursor:pointer"><i class="fa-solid fa-upload" style="color:#34d399"></i><span>Importar</span>
+          <input type="file" accept=".json" hidden onchange="importJSON(event)"></label>
+        <button class="btn-ghost danger" onclick="resetData()"><i class="fa-solid fa-rotate-right" style="color:#fca5a5"></i><span>Resetear</span></button>
+      </div>
+    </div>
+    <div class="roles" id="roleChips" role="group" aria-label="Filtrar por rol"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="kpis" aria-label="Indicadores">
+    <div class="panel kpi k-blue" style="--k:#2563eb">
+      <div class="kpi-label">Progreso global</div>
+      <div class="kpi-value" id="kpiPct">0%</div>
+      <div class="bar"><div id="kpiBar" style="width:0%"></div></div>
+    </div>
+    <div class="panel kpi" style="--k:#9333ea">
+      <div class="kpi-label">Inversión completada</div>
+      <div class="kpi-value" id="kpiSpent">$0 USD</div>
+      <div class="kpi-sub" id="kpiSpentClp">~$0 CLP</div>
+      <div class="kpi-sub" id="kpiPending" style="margin-top:auto"></div>
+    </div>
+    <div class="panel kpi" style="--k:#475569">
+      <div class="kpi-label">Total catálogo</div>
+      <div class="kpi-value" id="kpiTotal">37</div>
+      <div class="kpi-sub">Certificaciones activas</div>
+      <div class="kpi-sub" id="kpiHours" style="margin-top:auto"></div>
+    </div>
+    <div class="panel kpi" style="--k:#10b981">
+      <div class="kpi-label">Desglose de estados</div>
+      <div class="states">
+        <div><span class="lbl w">🟡 EN CURSO</span><b id="cWip">0</b></div>
+        <div style="text-align:right"><span class="lbl g">🟢 COMPLETADAS</span><b id="cOk">0</b></div>
+      </div>
+      <div class="kpi-sub" id="kpiNext" style="margin-top:auto"></div>
+    </div>
+  </section>
+
+  <section class="panel role-prog" id="roleProg" aria-label="Progreso por rol"></section>
+
+  <section class="panel toolbar" aria-label="Filtros">
+    <div class="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input class="field" id="searchInput" type="search" placeholder="Buscar código, nombre o proveedor…" oninput="onSearch()" aria-label="Buscar">
+      <kbd>/</kbd>
+    </div>
+    <select class="field" id="vendorSelect" onchange="onFilter()" aria-label="Proveedor"></select>
+    <select class="field" id="statusSelect" onchange="onFilter()" aria-label="Estado">
+      <option value="ALL">Todos los estados</option><option value="TODO">⚪ Por iniciar</option><option value="IN_PROGRESS">🟡 En curso</option><option value="COMPLETED">🟢 Completada</option>
+    </select>
+    <select class="field" id="personSelect" onchange="onFilter()" aria-label="Persona que la cursa"></select>
+    <select class="field" id="sortSelect" onchange="onFilter()" aria-label="Ordenar">
+      <option value="catalog">Orden: catálogo</option><option value="name">Nombre A–Z</option><option value="priceAsc">Precio ↑</option><option value="priceDesc">Precio ↓</option><option value="hoursAsc">Menos horas primero</option><option value="status">Por estado</option>
+    </select>
+    <div class="seg" role="group" aria-label="Vista">
+      <button id="v-GRID" onclick="setView('GRID')"><i class="fa-solid fa-border-all"></i><span>Tarjetas</span></button>
+      <button id="v-MATRIX" onclick="setView('MATRIX')"><i class="fa-solid fa-table-cells"></i><span>Matriz por roles</span></button>
+    </div>
+  </section>
+
+  <div class="meta-row"><span id="resultCount"></span><button class="link-btn" id="clearBtn" onclick="clearFilters()" hidden>Limpiar filtros</button></div>
+
+  <main>
+    <div id="gridContainer" class="grid"></div>
+    <div id="matrixContainer" hidden></div>
+  </main>
+  <footer>Tipo de cambio de referencia: 1 USD = <span id="rateLbl"></span> CLP · Los precios son estimados; verifica en el sitio oficial.</footer>
+</div>
+
+<!-- MODAL -->
+<div class="backdrop" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <button class="x" onclick="closeModal()" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="code" id="mCode"></span><span class="level" id="mLevel"></span><span class="pill" id="mRole"></span></div>
+    <h2 id="mTitle"></h2><p class="sub" id="mVendor"></p>
+    <div class="box" id="mDesc"></div>
+    <div class="box info">
+      <div><small>⏱️ Tiempo estimado</small><b id="mTime"></b></div>
+      <div><small>💵 Examen</small><b id="mPrice" style="color:var(--ok)"></b></div>
+      <div><small>📅 Ritmo</small><b id="mPace"></b></div>
+    </div>
+    <h5><i class="fa-solid fa-up-right-from-square"></i> Enlaces oficiales y recursos</h5>
+    <div class="links">
+      <a id="mLo" target="_blank" rel="noopener" style="--c2:var(--primary)"><span><i class="fa-solid fa-certificate"></i> Examen oficial</span><i class="fa-solid fa-arrow-right"></i></a>
+      <a id="mLd" target="_blank" rel="noopener" style="--c2:#0891b2"><span><i class="fa-solid fa-book-open"></i> Guía de estudio</span><i class="fa-solid fa-arrow-right"></i></a>
+      <a id="mLy" target="_blank" rel="noopener" style="--c2:#dc2626"><span><i class="fa-brands fa-youtube"></i> YouTube</span><i class="fa-solid fa-arrow-right"></i></a>
+      <a id="mLu" target="_blank" rel="noopener" style="--c2:#9333ea"><span><i class="fa-solid fa-graduation-cap"></i> Cursos Udemy</span><i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="form">
+      <div><label for="mStatus">Estado</label>
+        <select class="field" id="mStatus" style="width:100%"><option value="TODO">⚪ Por iniciar</option><option value="IN_PROGRESS">🟡 En curso</option><option value="COMPLETED">🟢 Completada</option></select></div>
+      <div style="grid-column:1/-1;order:3">
+        <label for="mResp">Personas que la están cursando</label>
+        <div class="people-add">
+          <input class="field" id="mResp" type="text" placeholder="Escribe un nombre y presiona Enter" onkeydown="if(event.key==='Enter'||event.key===','){event.preventDefault();addPerson();}">
+          <button type="button" class="btn sec" onclick="addPerson()"><i class="fa-solid fa-user-plus"></i> Agregar</button>
+        </div>
+        <div class="people" id="mPeople"></div>
+      </div>
+      <div><label for="mDate">Fecha objetivo del examen</label><input class="field" id="mDate" type="date"></div>
+    </div>
+    <div class="notes"><label>Bitácora de estudio: fecha, persona y comentario</label>
+      <div class="log-form">
+        <input class="field" id="lDate" type="date" aria-label="Fecha">
+        <input class="field" id="lPerson" type="text" placeholder="Nombre de la persona" aria-label="Persona">
+        <textarea class="field" id="lText" placeholder="Comentario: avance, módulo terminado, dudas, resultado del examen…"></textarea>
+        <button type="button" class="btn sec" onclick="addLogEntry()"><i class="fa-solid fa-plus"></i> Agregar a la bitácora</button>
+      </div>
+      <div class="log-list" id="logList"></div></div>
+    <div class="modal-foot"><button class="btn sec" onclick="closeModal()">Cancelar</button><button class="btn" onclick="saveModal()"><i class="fa-solid fa-check"></i> Guardar cambios</button></div>
+  </div>
+</div>
+<div class="backdrop" id="confirmModal" onclick="if(event.target===this)closeConfirm()">
+  <div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="cTitle" style="max-width:420px;text-align:center">
+    <div style="width:54px;height:54px;border-radius:50%;background:var(--bad-soft);color:var(--bad);display:grid;place-items:center;font-size:22px;margin:0 auto 12px"><i class="fa-solid fa-triangle-exclamation"></i></div>
+    <h2 id="cTitle" style="padding:0;margin:0 0 6px">¿Reiniciar todo?</h2>
+    <p class="sub" style="margin-bottom:18px">Se borrarán los estados, las personas que cursan, las fechas y toda la bitácora de todas las certificaciones. No se puede deshacer.</p>
+    <div style="display:flex;gap:8px;justify-content:center">
+      <button class="btn sec" onclick="closeConfirm()">Cancelar</button>
+      <button class="btn" id="confirmOk" onclick="confirmReset()" style="background:var(--bad)"><i class="fa-solid fa-trash-can"></i> Sí, borrar todo</button>
+    </div>
+  </div>
+</div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script>
+/* ───────── Configuración ───────── */
+const CLP_RATE = 950;
+const DEFAULT_OWNER = '';   // la tarjeta solo muestra el nombre de quien la está cursando
+const LEGACY_OWNER = 'Ing. Jesús Hernández';   // valor por defecto de versiones anteriores: se ignora
+const STORE = 'cert_roadmap_tracker_state', THEME = 'cert_roadmap_tracker_theme';
+
+const ROLES = {
+  'data-analyst':   { label: 'Analista de Datos',          color: 'var(--role-data)' },
+  'bi-analyst':     { label: 'Analista BI',                color: 'var(--role-bi)' },
+  'google-analyst': { label: 'Analista Ambiente Google',   color: 'var(--role-google)' },
+  'sap-specialist': { label: 'Especialista SAP',           color: 'var(--role-sap)' }
+};
+const STATUS = {
+  TODO:        { label: 'Por iniciar', icon: 'fa-regular fa-circle' },
+  IN_PROGRESS: { label: 'En curso',    icon: 'fa-solid fa-spinner' },
+  COMPLETED:   { label: 'Completada',  icon: 'fa-solid fa-circle-check' }
+};
+const VENDORS = [['Excel MOS','Microsoft Office (MOS)'],['Microsoft','Microsoft Azure / Fabric'],['SAP Certifications','SAP'],['Google Cloud','Google Cloud (GCP)'],['AWS','Amazon Web Services'],['Snowflake','Snowflake'],['Databricks','Databricks'],['Oracle','Oracle Database'],['Python Institute','Python Institute']];
+
+/* ───────── Catálogo ───────── */
+const enc = encodeURIComponent;
+function C(o) {
+  const q = o.q || o.title;
+  return Object.assign({
+    roleLabel: ROLES[o.role].label,
+    docsLink: 'https://www.google.com/search?q=' + enc(o.title + ' docs'),
+    officialLink: 'https://www.google.com/search?q=' + enc(o.title),
+    youtubeLink: 'https://www.youtube.com/results?search_query=' + enc(q),
+    udemyLink: 'https://www.udemy.com/courses/search/?q=' + enc(q)
+  }, o);
+}
+const certsCatalog = [
+  C({ id:'MO-200', code:'MO-200', title:'Asociado de Excel', vendor:'Excel MOS', level:'ASOCIADO', role:'bi-analyst', usdPrice:100, timeEst:'30-50 h', days:'~20 días', months:'~0.8 meses', desc:'Especialista en Microsoft Office: Excel (nivel asociado). Demuestra la capacidad fundamental de crear, modificar y formatear hojas de cálculo.', officialLink:'https://learn.microsoft.com/certifications/exams/mo-200', docsLink:'https://support.microsoft.com/excel', q:'mo-200 excel associate' }),
+  C({ id:'MO-201', code:'MO-201', title:'Experto en Excel', vendor:'Excel MOS', level:'EXPERTO', role:'bi-analyst', usdPrice:100, timeEst:'40-60 h', days:'~25 días', months:'~1.0 meses', desc:'Especialista en Microsoft Office: Experto en Excel - MO-201. Evalúa la capacidad de crear, gestionar y distribuir hojas de cálculo avanzadas y macros.', officialLink:'https://learn.microsoft.com/certifications/exams/mo-201', docsLink:'https://support.microsoft.com/excel', q:'mo-201 excel expert' }),
+  C({ id:'PL-300', code:'PL-300', title:'Microsoft Power BI Data Analyst', vendor:'Microsoft', level:'ASOCIADO', role:'bi-analyst', usdPrice:165, timeEst:'60 h', days:'~30 días', months:'~1.5 meses', desc:'Modela datos, crea reportes interactivos, paneles y configura seguridad en Power BI Service y Desktop.', officialLink:'https://learn.microsoft.com/certifications/exams/pl-300', docsLink:'https://learn.microsoft.com/power-bi/', q:'pl-300 power bi' }),
+  C({ id:'DP-700', code:'DP-700', title:'Microsoft Fabric Data Engineer', vendor:'Microsoft', level:'ASOCIADO', role:'data-analyst', usdPrice:165, timeEst:'70 h', days:'~35 días', months:'~2.0 meses', desc:'Diseño e implementación de soluciones analíticas integradas con Microsoft Fabric, OneLake y Delta Lake.', officialLink:'https://learn.microsoft.com/certifications/exams/dp-700', docsLink:'https://learn.microsoft.com/fabric/', q:'dp-700 fabric' }),
+  C({ id:'DP-800', code:'DP-800', title:'Administering Azure SQL Solutions', vendor:'Microsoft', level:'ASOCIADO', role:'data-analyst', usdPrice:165, timeEst:'80 h', days:'~40 días', months:'~2.0 meses', desc:'Gestión, optimización y administración de bases de datos relacionales en la nube de Microsoft Azure SQL.', officialLink:'https://learn.microsoft.com/certifications/exams/dp-800', docsLink:'https://learn.microsoft.com/azure/azure-sql/', q:'dp-800 azure sql' }),
+  C({ id:'DP-900', code:'DP-900', title:'Microsoft Azure Data Fundamentals', vendor:'Microsoft', level:'FUNDAMENTALS', role:'data-analyst', usdPrice:99, timeEst:'20-30 h', days:'~10 días', months:'~0.5 meses', desc:'Conceptos fundamentales de datos relacionales y no relacionales en Azure.', officialLink:'https://learn.microsoft.com/certifications/exams/dp-900', docsLink:'https://learn.microsoft.com/', q:'dp-900' }),
+  C({ id:'DP-100', code:'DP-100', title:'Designing Data Science Solution on Azure', vendor:'Microsoft', level:'ASOCIADO', role:'data-analyst', usdPrice:165, timeEst:'80 h', days:'~40 días', months:'~2.0 meses', desc:'Aplicación de ciencia de datos y aprendizaje automático utilizando Azure Machine Learning.', officialLink:'https://learn.microsoft.com/certifications/exams/dp-100', docsLink:'https://learn.microsoft.com/', q:'dp-100' }),
+  C({ id:'AI-102', code:'AI-102', title:'Designing Azure AI Solutions', vendor:'Microsoft', level:'ASOCIADO', role:'data-analyst', usdPrice:165, timeEst:'75 h', days:'~35 días', months:'~1.8 meses', desc:'Desarrollo de soluciones de Inteligencia Artificial utilizando Servicios Cognitivos de Azure.', officialLink:'https://learn.microsoft.com/certifications/exams/ai-102', docsLink:'https://learn.microsoft.com/', q:'ai-102' }),
+  C({ id:'C_SAC_2415', code:'C_SAC_2415', title:'SAP Certified Associate - SAP Analytics Cloud', vendor:'SAP Certifications', level:'ASOCIADO', role:'sap-specialist', usdPrice:550, timeEst:'60 h', days:'~30 días', months:'~1.5 meses', desc:'Modelado, Business Intelligence, planificación y analítica predictiva en SAP Analytics Cloud.', officialLink:'https://training.sap.com/', docsLink:'https://help.sap.com/', q:'sap analytics cloud' }),
+  C({ id:'C_BW4H_214', code:'C_BW4H_214', title:'SAP BW/4HANA Data Warehousing', vendor:'SAP Certifications', level:'ASOCIADO', role:'sap-specialist', usdPrice:550, timeEst:'75 h', days:'~40 días', months:'~2.0 meses', desc:'Modelado empresarial y gestión del almacén de datos en SAP BW/4HANA.', officialLink:'https://training.sap.com/', docsLink:'https://help.sap.com/', q:'sap bw4hana' }),
+  C({ id:'C_ACTIVATE', code:'C_ACTIVATE', title:'SAP Activate Project Manager', vendor:'SAP Certifications', level:'ESPECIALISTA', role:'sap-specialist', usdPrice:550, timeEst:'40 h', days:'~20 días', months:'~1.0 meses', desc:'Gestión de proyectos de implementación ágil de software SAP con la metodología SAP Activate.', officialLink:'https://training.sap.com/', docsLink:'https://help.sap.com/', q:'sap activate' }),
+  C({ id:'GCP-PDA', code:'GCP Data', title:'Professional Cloud Data Engineer', vendor:'Google Cloud', level:'PROFESIONAL', role:'google-analyst', usdPrice:200, timeEst:'90 h', days:'~45 días', months:'~2.2 meses', desc:'Toma de decisiones basada en datos mediante el diseño y construcción de sistemas de procesamiento de datos en GCP (BigQuery, Dataflow, Pub/Sub).', officialLink:'https://cloud.google.com/certification/data-engineer', docsLink:'https://cloud.google.com/docs', q:'gcp data engineer' }),
+  C({ id:'GCP-CDA', code:'GCP Analytics', title:'Professional Cloud Database Engineer', vendor:'Google Cloud', level:'PROFESIONAL', role:'google-analyst', usdPrice:200, timeEst:'80 h', days:'~40 días', months:'~2.0 meses', desc:'Diseño, creación y gestión de soluciones de bases de datos escalables de Google Cloud.', officialLink:'https://cloud.google.com/certification', docsLink:'https://cloud.google.com/docs', q:'gcp database engineer' }),
+  C({ id:'AWS-DAS', code:'AWS DAS', title:'AWS Certified Data Analytics - Specialty', vendor:'AWS', level:'ESPECIALISTA', role:'data-analyst', usdPrice:300, timeEst:'100 h', days:'~50 días', months:'~2.5 meses', desc:'Diseño y mantenimiento de servicios analíticos integrados de AWS (Redshift, Athena, Glue, EMR).', officialLink:'https://aws.amazon.com/certification/', docsLink:'https://docs.aws.amazon.com/', q:'aws data analytics' }),
+  C({ id:'AWS-DEA', code:'AWS DEA', title:'AWS Certified Data Engineer - Associate', vendor:'AWS', level:'ASOCIADO', role:'data-analyst', usdPrice:150, timeEst:'70 h', days:'~35 días', months:'~1.8 meses', desc:'Implementación de pipelines de datos y transformación eficiente en AWS.', officialLink:'https://aws.amazon.com/certification/', docsLink:'https://docs.aws.amazon.com/', q:'aws data engineer' }),
+  C({ id:'SNOW-COF', code:'COF-C02', title:'SnowPro Core Certification', vendor:'Snowflake', level:'CORE', role:'data-analyst', usdPrice:175, timeEst:'50 h', days:'~25 días', months:'~1.2 meses', desc:'Dominio de la arquitectura de Snowflake, carga de datos, performance y gobernanza.', officialLink:'https://www.snowflake.com/certifications/', docsLink:'https://docs.snowflake.com/', q:'snowpro core' }),
+  C({ id:'DB-DE-ASSOC', code:'DB-DEA', title:'Databricks Certified Data Engineer Associate', vendor:'Databricks', level:'ASOCIADO', role:'data-analyst', usdPrice:200, timeEst:'60 h', days:'~30 días', months:'~1.5 meses', desc:'Uso del entorno Lakehouse, PySpark, Delta Lake y orquestación de flujos de trabajo.', officialLink:'https://www.databricks.com/learn/certification', docsLink:'https://docs.databricks.com/', q:'databricks data engineer' }),
+  C({ id:'PCAP-31-03', code:'PCAP', title:'PCAP – Certified Associate in Python Programming', vendor:'Python Institute', level:'ASOCIADO', role:'data-analyst', usdPrice:295, timeEst:'40 h', days:'~20 días', months:'~1.0 meses', desc:'Fundamentos de programación orientada a objetos, manipulación de módulos y archivos en Python.', officialLink:'https://pythoninstitute.org/pcap', docsLink:'https://docs.python.org/3/', q:'pcap python' })
+];
+[
+  ['ORA-1Z0','Oracle Database SQL Certified Associate','Oracle','data-analyst','ASOCIADO',245],
+  ['GCP-MLE','Google Cloud Machine Learning Engineer','Google Cloud','google-analyst','PROFESIONAL',200],
+  ['AZ-900','Microsoft Azure Fundamentals','Microsoft','bi-analyst','FUNDAMENTALS',99],
+  ['PL-900','Microsoft Power Platform Fundamentals','Microsoft','bi-analyst','FUNDAMENTALS',99],
+  ['DP-203','Data Engineering on Microsoft Azure','Microsoft','data-analyst','ASOCIADO',165],
+  ['C_TS4FI','SAP S/4HANA Finance Associate','SAP Certifications','sap-specialist','ASOCIADO',550],
+  ['C_S4CPB','SAP S/4HANA Cloud Public Edition','SAP Certifications','sap-specialist','ASOCIADO',550],
+  ['AWS-CLF','AWS Certified Cloud Practitioner','AWS','bi-analyst','FUNDAMENTALS',100],
+  ['AWS-SAA','AWS Certified Solutions Architect Associate','AWS','data-analyst','ASOCIADO',150],
+  ['DB-DA-ASSOC','Databricks Data Analyst Associate','Databricks','bi-analyst','ASOCIADO',200],
+  ['SNOW-ADV','SnowPro Advanced Architect','Snowflake','data-analyst','AVANZADO',375],
+  ['PCPP1','PCPP1 – Certified Professional in Python','Python Institute','data-analyst','PROFESIONAL',295],
+  ['MO-202','Microsoft Access Expert (Access 2019)','Excel MOS','bi-analyst','EXPERTO',100],
+  ['MO-100','Microsoft Word Associate','Excel MOS','bi-analyst','ASOCIADO',100],
+  ['DP-600','Implementing Analytics Solutions with MS Fabric','Microsoft','bi-analyst','ASOCIADO',165],
+  ['AI-900','Microsoft Azure AI Fundamentals','Microsoft','bi-analyst','FUNDAMENTALS',99],
+  ['C_HANAIMP','SAP HANA Management & Modeling','SAP Certifications','sap-specialist','ESPECIALISTA',550],
+  ['GCP-ACE','Associate Cloud Engineer Google','Google Cloud','google-analyst','ASOCIADO',125],
+  ['GCP-PCA','Professional Cloud Architect Google','Google Cloud','google-analyst','PROFESIONAL',200]
+].forEach(([code, title, vendor, role, level, usdPrice], i) => certsCatalog.push(C({
+  id: `EXTRA-${i}-${code}`, code, title, vendor, level, role, usdPrice,
+  timeEst: '40-60 h', days: '~25 días', months: '~1.0 meses',
+  desc: `Certificación oficial de nivel ${level.toLowerCase()} ofrecida por ${vendor} para especialistas en Analytics y Cloud.`
+})));
+
+/* Horas promedio de la estimación ("30-50 h" → 40) */
+certsCatalog.forEach(c => {
+  const n = (c.timeEst.match(/\d+/g) || [0]).map(Number);
+  c.hours = n.reduce((a, b) => a + b, 0) / n.length;
+});
+
+/* ───────── Estado ───────── */
+const safe = {
+  get(k, d) { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+let userProgress = safe.get(STORE, {});
+/* Siempre se inicia en tarjetas y mostrando todo; los filtros no se recuerdan */
+let prefs = { role: 'ALL', view: 'GRID', vendor: 'ALL', status: 'ALL', person: 'ALL', sort: 'catalog' };
+let activeModalId = null, lastFocus = null, draftLog = [], draftPeople = [];
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
+const usd = n => '$' + n.toLocaleString('es-CL');
+const clp = n => '$' + Math.round(n * CLP_RATE).toLocaleString('es-CL');
+const getProg = id => {
+  const p = Object.assign({ status: 'TODO', responsible: DEFAULT_OWNER, notes: '', targetDate: '', log: [] }, userProgress[id]);
+  if (!Array.isArray(p.people)) p.people = String(p.responsible || '').split(/[,;]/);
+  p.people = p.people.map(x => String(x).trim()).filter(x => x && x !== LEGACY_OWNER);
+  p.responsible = p.people.join(', ');
+  return p;
+};
+const today = () => { const d = new Date(); return new Date(d - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10); };
+const fmtDate = s => s ? new Date(s + 'T00:00:00').toLocaleDateString('es-CL', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
+
+function saveState() { safe.set(STORE, userProgress); }
+
+function toast(msg, icon = 'fa-circle-check') {
+  const t = document.createElement('div');
+  t.className = 'toast'; t.innerHTML = `<i class="fa-solid ${icon}"></i>${esc(msg)}`;
+  $('toasts').appendChild(t); setTimeout(() => t.remove(), 2800);
+}
+
+/* ───────── Tema ───────── */
+function applyTheme(t) {
+  document.documentElement.dataset.theme = t;
+  $('themeIcon').className = 'fa-solid ' + (t === 'dark' ? 'fa-sun' : 'fa-moon');
+  $('themeLbl').textContent = t === 'dark' ? 'Modo claro' : 'Modo oscuro';
+}
+function toggleTheme() {
+  const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  applyTheme(t); safe.set(THEME, t);
+}
+
+/* ───────── Filtros ───────── */
+function getFiltered() {
+  const q = $('searchInput').value.trim().toLowerCase();
+  const rank = { IN_PROGRESS: 0, TODO: 1, COMPLETED: 2 };
+  const items = certsCatalog.filter(c => {
+    if (prefs.role !== 'ALL' && c.role !== prefs.role) return false;
+    if (prefs.vendor !== 'ALL' && c.vendor !== prefs.vendor) return false;
+    if (prefs.status !== 'ALL' && getProg(c.id).status !== prefs.status) return false;
+    if (prefs.person !== 'ALL') {
+      const ppl = getProg(c.id).people;
+      if (prefs.person === '__NONE__' ? ppl.length : !ppl.includes(prefs.person)) return false;
+    }
+    return !q || (c.code + ' ' + c.title + ' ' + c.vendor + ' ' + c.level + ' ' + c.roleLabel).toLowerCase().includes(q);
+  });
+  const sorters = {
+    name: (a, b) => a.title.localeCompare(b.title),
+    priceAsc: (a, b) => a.usdPrice - b.usdPrice,
+    priceDesc: (a, b) => b.usdPrice - a.usdPrice,
+    hoursAsc: (a, b) => a.hours - b.hours,
+    status: (a, b) => rank[getProg(a.id).status] - rank[getProg(b.id).status]
+  };
+  if (sorters[prefs.sort]) items.sort(sorters[prefs.sort]);
+  return items;
+}
+let searchTimer;
+function onSearch() { clearTimeout(searchTimer); searchTimer = setTimeout(render, 120); }
+function onFilter() {
+  prefs.vendor = $('vendorSelect').value; prefs.status = $('statusSelect').value; prefs.person = $('personSelect').value; prefs.sort = $('sortSelect').value;
+  render();
+}
+function setRole(r) { prefs.role = r; render(); }
+function setView(v) { prefs.view = v; render(); }
+function clearFilters() {
+  prefs.role = 'ALL'; prefs.vendor = 'ALL'; prefs.status = 'ALL'; prefs.person = 'ALL';
+  $('searchInput').value = ''; syncControls(); render();
+}
+/* Opciones del filtro de personas: todas las que aparecen en alguna certificación */
+function updatePersonOptions() {
+  const count = {};
+  certsCatalog.forEach(c => getProg(c.id).people.forEach(n => { count[n] = (count[n] || 0) + 1; }));
+  const names = Object.keys(count).sort((a, b) => a.localeCompare(b));
+  if (prefs.person !== 'ALL' && prefs.person !== '__NONE__' && !count[prefs.person]) prefs.person = 'ALL';
+  $('personSelect').innerHTML = '<option value="ALL">Todas las personas</option><option value="__NONE__">Sin asignar</option>' +
+    names.map(n => `<option value="${esc(n)}">👤 ${esc(n)} (${count[n]})</option>`).join('');
+  $('personSelect').value = prefs.person;
+}
+function syncControls() {
+  $('personSelect').value = prefs.person;
+  $('vendorSelect').value = prefs.vendor; $('statusSelect').value = prefs.status; $('sortSelect').value = prefs.sort;
+}
+
+/* ───────── Piezas visuales ───────── */
+const VICON = [
+  ['Excel MOS', '#15803d', 'fa-solid fa-file-excel'], ['Microsoft', '#2563eb', 'fa-brands fa-microsoft'],
+  ['SAP', '#075985', 'fa-solid fa-layer-group'], ['Google', '#059669', 'fa-brands fa-google'],
+  ['AWS', '#d97706', 'fa-brands fa-aws'], ['Snowflake', '#0ea5e9', 'fa-regular fa-snowflake'],
+  ['Databricks', '#dc2626', 'fa-solid fa-database'], ['Oracle', '#b91c1c', 'fa-solid fa-server'],
+  ['Python', '#ca8a04', 'fa-brands fa-python']
+];
+function vendorIcon(v) {
+  const [, bg, ic] = VICON.find(x => v.includes(x[0])) || [0, '#475569', 'fa-solid fa-certificate'];
+  return `<div class="vicon" style="background:${bg}"><i class="${ic}"></i></div>`;
+}
+function statusSeg(c, p) {
+  return `<div class="status-seg" role="group" aria-label="Estado de ${esc(c.code)}">` +
+    Object.entries(STATUS).map(([k, s]) =>
+      `<button data-s="${k}" class="${p.status === k ? 'on' : ''}" aria-pressed="${p.status === k}" title="${s.label}" onclick="setStatus('${c.id}','${k}')"><i class="${s.icon}"></i>${p.status === k ? s.label : ''}</button>`
+    ).join('') + `</div>`;
+}
+function dateChip(c, p) {
+  if (!p.targetDate) return '';
+  const late = p.status !== 'COMPLETED' && p.targetDate < today();
+  return `<span class="pill ${late ? 'late' : 'date'}"><i class="fa-regular fa-calendar"></i> ${fmtDate(p.targetDate)}${late ? ' · vencida' : ''}</span>`;
+}
+
+function logOf(p) {
+  const l = (p.log || []).slice();
+  if (!l.length && p.notes) l.push({ date: '', person: p.responsible || DEFAULT_OWNER, text: p.notes });
+  return l;
+}
+function lastNoteHTML(p) {
+  const l = logOf(p); if (!l.length) return '';
+  const e = l.slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''))[0];
+  return `<div class="last-note"><i class="fa-regular fa-comment"></i> <b>${esc(e.person)}</b>${e.date ? ' · ' + fmtDate(e.date) : ''}: ${esc(e.text)}</div>`;
+}
+
+function cardHTML(c) {
+  const p = getProg(c.id), r = ROLES[c.role];
+  return `
+  <article class="card ${p.status === 'COMPLETED' ? 'done' : ''}" style="--c:${r.color}">
+    <div class="card-top">
+      <div class="code-wrap">${vendorIcon(c.vendor)}<span class="code" title="${esc(c.code)}">${esc(c.code)}</span></div>
+      <span class="level ${esc(c.level)}">${esc(c.level)}</span>
+    </div>
+    <div><h3>${esc(c.title)}</h3><p class="desc" style="margin-top:4px">${esc(c.desc)}</p></div>
+    <div class="pills">
+      <span class="pill price">${usd(c.usdPrice)} USD</span>
+      <span class="pill">~${clp(c.usdPrice)} CLP</span>
+      <span class="pill"><i class="fa-regular fa-clock"></i> ${esc(c.timeEst)}</span>
+      ${dateChip(c, p)}
+    </div>
+    <div class="res">
+      <a class="o" href="${esc(c.officialLink)}" target="_blank" rel="noopener"><i class="fa-solid fa-certificate"></i>Examen</a>
+      <a class="d" href="${esc(c.docsLink)}" target="_blank" rel="noopener"><i class="fa-solid fa-book-open"></i>Guía</a>
+      <a class="y" href="${esc(c.youtubeLink)}" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i>YouTube</a>
+      <a class="u" href="${esc(c.udemyLink)}" target="_blank" rel="noopener"><i class="fa-solid fa-graduation-cap"></i>Udemy</a>
+    </div>
+    <div class="card-foot">
+      ${statusSeg(c, p)}
+      <button class="details-btn" onclick="openModal('${c.id}')">Detalles <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+    <div class="owner"><span class="people">${p.people.map(n => `<span class="person"><i class="fa-regular fa-user"></i> ${esc(n)}</span>`).join('')}</span><span>${esc(c.roleLabel)}</span></div>
+  </article>`;
+}
+
+function emptyHTML() {
+  return `<div class="panel empty"><i class="fa-regular fa-folder-open"></i><p>No hay certificaciones que coincidan con los filtros.</p><button class="btn" onclick="clearFilters()">Limpiar filtros</button></div>`;
+}
+
+function renderGrid(items) {
+  $('gridContainer').innerHTML = items.length ? items.map(cardHTML).join('') : emptyHTML();
+}
+
+function renderMatrix(items) {
+  const html = Object.entries(ROLES).map(([key, r]) => {
+    const list = items.filter(c => c.role === key);
+    if (!list.length) return '';
+    const rows = list.map(c => {
+      const p = getProg(c.id);
+      return `<tr>
+        <td class="mono">${esc(c.code)}</td><td><b>${esc(c.title)}</b></td><td>${esc(c.vendor)}</td>
+        <td style="color:var(--ok);font-weight:700">${usd(c.usdPrice)} <span style="color:var(--muted);font-weight:500">(~${clp(c.usdPrice)})</span></td>
+        <td>${esc(c.timeEst)}</td><td>${statusSeg(c, p)}</td>
+        <td style="text-align:right"><button class="details-btn" onclick="openModal('${c.id}')">Abrir ficha →</button></td></tr>`;
+    }).join('');
+    return `<section class="panel matrix-block" style="--c:${r.color}"><h3>${esc(r.label)} <small>(${list.length})</small></h3>
+      <div class="table-scroll"><table><thead><tr><th>Código</th><th>Certificación</th><th>Proveedor</th><th>Costo</th><th>Tiempo</th><th>Estado</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+  }).join('');
+  $('matrixContainer').innerHTML = html || emptyHTML();
+}
+
+/* ───────── Render principal ───────── */
+function render() {
+  updatePersonOptions();
+  const items = getFiltered();
+  const views = { GRID: 'gridContainer', MATRIX: 'matrixContainer' };
+  Object.entries(views).forEach(([v, id]) => { $(id).hidden = v !== prefs.view; $('v-' + v).classList.toggle('on', v === prefs.view); });
+  if (prefs.view === 'GRID') renderGrid(items); else renderMatrix(items);
+
+  const filtered = prefs.role !== 'ALL' || prefs.vendor !== 'ALL' || prefs.status !== 'ALL' || prefs.person !== 'ALL' || $('searchInput').value.trim();
+  $('resultCount').textContent = `Mostrando ${items.length} de ${certsCatalog.length} certificaciones`;
+  $('clearBtn').hidden = !filtered;
+  renderChips(); renderRoleProgress(); updateKPIs();
+}
+
+function renderChips() {
+  const count = r => certsCatalog.filter(c => r === 'ALL' || c.role === r).length;
+  const chip = (key, label, color) =>
+    `<button class="chip ${prefs.role === key ? 'active' : ''}" data-role="${key}" style="--c:${color || '#64748b'}" aria-pressed="${prefs.role === key}" onclick="setRole('${key}')">${color ? '<span class="dot"></span>' : ''}${label}<span class="n">${count(key)}</span></button>`;
+  $('roleChips').innerHTML = `<span class="roles-label"><i class="fa-solid fa-layer-group"></i> Roles:</span>` +
+    chip('ALL', 'Todos') + Object.entries(ROLES).map(([k, r]) => chip(k, r.label, r.color)).join('');
+}
+
+function renderRoleProgress() {
+  $('roleProg').innerHTML = Object.entries(ROLES).map(([k, r]) => {
+    const all = certsCatalog.filter(c => c.role === k);
+    const done = all.filter(c => getProg(c.id).status === 'COMPLETED').length;
+    const wip = all.filter(c => getProg(c.id).status === 'IN_PROGRESS').length;
+    return `<button class="rp" style="--c:${r.color}" onclick="setRole('${k}')" title="Filtrar por ${esc(r.label)}">
+      <div class="rp-head"><span>${esc(r.label)}</span><span>${done}/${all.length}${wip ? ` · ${wip} en curso` : ''}</span></div>
+      <div class="bar"><div style="width:${all.length ? done / all.length * 100 : 0}%"></div></div></button>`;
+  }).join('');
+}
+
+function updateKPIs() {
+  const total = certsCatalog.length;
+  let ok = 0, wip = 0, spent = 0, pending = 0, hoursLeft = 0;
+  certsCatalog.forEach(c => {
+    const s = getProg(c.id).status;
+    if (s === 'COMPLETED') { ok++; spent += c.usdPrice; }
+    else { pending += c.usdPrice; hoursLeft += c.hours; if (s === 'IN_PROGRESS') wip++; }
+  });
+  const pct = total ? Math.round(ok / total * 100) : 0;
+  $('kpiPct').textContent = pct + '%';
+  $('kpiBar').style.width = pct + '%';
+  $('kpiSpent').textContent = usd(spent) + ' USD';
+  $('kpiSpentClp').textContent = '~' + clp(spent) + ' CLP';
+  $('kpiPending').textContent = `Pendiente: ${usd(pending)} USD`;
+  $('kpiTotal').textContent = total;
+  $('kpiHours').textContent = `≈ ${Math.round(hoursLeft).toLocaleString('es-CL')} h de estudio restantes`;
+  $('cWip').textContent = wip; $('cOk').textContent = ok;
+  const next = certsCatalog.filter(c => getProg(c.id).status !== 'COMPLETED' && getProg(c.id).targetDate)
+    .sort((a, b) => getProg(a.id).targetDate.localeCompare(getProg(b.id).targetDate))[0];
+  $('kpiNext').innerHTML = next ? `<i class="fa-regular fa-calendar"></i> Próximo examen: <b>${esc(next.code)}</b> · ${fmtDate(getProg(next.id).targetDate)}` : '';
+}
+
+/* ───────── Acciones ───────── */
+function setStatus(id, status) {
+  const c = certsCatalog.find(x => x.id === id); if (!c || !STATUS[status]) return;
+  userProgress[id] = Object.assign({}, getProg(id), { status });
+  saveState(); render();
+  toast(`${c.code} → ${STATUS[status].label}`);
+}
+
+/* Modal */
+function openModal(id) {
+  const c = certsCatalog.find(x => x.id === id); if (!c) return;
+  activeModalId = id; lastFocus = document.activeElement;
+  const p = getProg(id), r = ROLES[c.role];
+  $('mCode').textContent = c.code;
+  $('mLevel').textContent = c.level; $('mLevel').className = 'level ' + c.level;
+  $('mRole').textContent = c.roleLabel; $('mRole').style.cssText = `background:${r.color};color:#fff;border:0`;
+  $('mTitle').textContent = c.title;
+  $('mVendor').textContent = `Proveedor: ${c.vendor}`;
+  $('mDesc').textContent = c.desc;
+  $('mTime').textContent = c.timeEst;
+  $('mPrice').textContent = `${usd(c.usdPrice)} USD (~${clp(c.usdPrice)} CLP)`;
+  $('mPace').textContent = `${c.days} · ${c.months}`;
+  $('mLo').href = c.officialLink; $('mLd').href = c.docsLink; $('mLy').href = c.youtubeLink; $('mLu').href = c.udemyLink;
+  $('mStatus').value = p.status; $('mResp').value = ''; draftPeople = p.people.slice(); renderPeople();
+  $('mDate').value = p.targetDate || '';
+  draftLog = logOf(p); $('lDate').value = today(); $('lPerson').value = ''; $('lText').value = ''; renderLog();
+  $('modal').classList.add('open'); document.body.style.overflow = 'hidden';
+  $('lText').focus({ preventScroll: true });
+}
+function closeModal() {
+  $('modal').classList.remove('open'); document.body.style.overflow = ''; activeModalId = null;
+  lastFocus?.focus?.();
+}
+function renderLog() {
+  const l = draftLog.map((e, i) => ({ e, i })).sort((a, b) => (b.e.date || '').localeCompare(a.e.date || ''));
+  $('logList').innerHTML = l.length ? l.map(({ e, i }) => `<div class="log-item">
+    <div class="who"><i class="fa-regular fa-calendar"></i> ${e.date ? fmtDate(e.date) : 'Sin fecha'} <span>·</span> <i class="fa-regular fa-user"></i> ${esc(e.person || '—')}</div>
+    <p>${esc(e.text)}</p><button type="button" title="Eliminar entrada" aria-label="Eliminar entrada" onclick="removeLogEntry(${i})"><i class="fa-solid fa-trash-can"></i></button></div>`).join('')
+    : '<div style="color:var(--faint);font-size:12px;text-align:center;padding:10px">Aún no hay comentarios en la bitácora.</div>';
+}
+function addLogEntry() {
+  const text = $('lText').value.trim();
+  if (!text) { $('lText').focus(); return false; }
+  draftLog.push({ date: $('lDate').value, person: $('lPerson').value.trim() || draftPeople.join(', '), text });
+  $('lText').value = ''; renderLog(); return true;
+}
+function removeLogEntry(i) { draftLog.splice(i, 1); renderLog(); }
+function renderPeople() {
+  $('mPeople').innerHTML = draftPeople.map((n, i) =>
+    `<span class="person"><i class="fa-regular fa-user"></i> ${esc(n)}<button type="button" aria-label="Quitar a ${esc(n)}" onclick="removePerson(${i})"><i class="fa-solid fa-xmark"></i></button></span>`).join('');
+}
+function addPerson() {
+  $('mResp').value.split(/[,;]/).map(x => x.trim()).filter(Boolean).forEach(n => {
+    if (!draftPeople.some(x => x.toLowerCase() === n.toLowerCase())) draftPeople.push(n);
+  });
+  $('mResp').value = ''; renderPeople(); $('mResp').focus();
+}
+function removePerson(i) { draftPeople.splice(i, 1); renderPeople(); }
+function saveModal() {
+  if (!activeModalId) return;
+  if ($('mResp').value.trim()) addPerson();
+  if ($('lText').value.trim()) addLogEntry();
+  userProgress[activeModalId] = {
+    status: $('mStatus').value, people: draftPeople, responsible: draftPeople.join(', '),
+    notes: '', targetDate: $('mDate').value, log: draftLog
+  };
+  saveState(); closeModal(); render(); toast('Cambios guardados');
+}
+
+/* Exportar / importar / resetear */
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(userProgress, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = `certificaciones_tracker_${today()}.json`; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  toast('Progreso exportado');
+}
+function importJSON(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const data = JSON.parse(reader.result);
+      if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('formato');
+      const clean = {}; let n = 0;
+      certsCatalog.forEach(c => {
+        const v = data[c.id]; if (!v || typeof v !== 'object') return;
+        clean[c.id] = {
+          status: STATUS[v.status] ? v.status : 'TODO', responsible: String(v.responsible || DEFAULT_OWNER), people: Array.isArray(v.people) ? v.people.map(String) : undefined,
+          notes: String(v.notes || ''), log: (Array.isArray(v.log) ? v.log : []).filter(e => e && e.text).map(e => ({ date: /^\d{4}-\d{2}-\d{2}$/.test(e.date || '') ? e.date : '', person: String(e.person || ''), text: String(e.text) })), targetDate: /^\d{4}-\d{2}-\d{2}$/.test(v.targetDate || '') ? v.targetDate : ''
+        }; n++;
+      });
+      userProgress = clean; saveState(); render(); toast(`Importadas ${n} certificaciones`);
+    } catch { toast('Archivo JSON no válido', 'fa-triangle-exclamation'); }
+    e.target.value = '';
+  };
+  reader.readAsText(file);
+}
+function resetData() { $('confirmModal').classList.add('open'); $('confirmOk').focus(); }
+function closeConfirm() { $('confirmModal').classList.remove('open'); }
+function confirmReset() {
+  userProgress = {};                       // estado, personas, fechas y bitácora
+  try { localStorage.removeItem(STORE); } catch {}
+  saveState();
+  closeConfirm(); if (activeModalId) closeModal();
+  clearFilters();                          // también limpia búsqueda y filtros y vuelve a pintar
+  toast('Todo fue reiniciado', 'fa-rotate-right');
+}
+
+/* "BY": autor oculto, se muestra al hacer clic */
+const AUTHOR = 'cert_roadmap_tracker_author';
+let authorDate = safe.get(AUTHOR, { date: today() }).date || today();
+function renderAuthor() {
+  $('aDate').value = authorDate;
+}
+function closeAuthor() { $('authorPop').hidden = true; $('byBtn').setAttribute('aria-expanded', 'false'); }
+function toggleAuthor(e) {
+  e.stopPropagation();
+  const open = $('authorPop').hidden;
+  const pop = $('authorPop');
+  pop.hidden = !open; $('byBtn').setAttribute('aria-expanded', String(open));
+  if (open) {   // ancla el panel al lado donde cabe en pantalla
+    const wrap = $('byBtn').parentElement.getBoundingClientRect();
+    const fitsLeftAligned = wrap.left + pop.offsetWidth <= innerWidth - 8;
+    pop.style.left = fitsLeftAligned ? '0' : 'auto'; pop.style.right = fitsLeftAligned ? 'auto' : '0';
+    pop.classList.toggle('arrow-left', fitsLeftAligned);
+  }
+}
+function saveAuthorDate() { authorDate = $('aDate').value; safe.set(AUTHOR, { date: authorDate }); renderAuthor(); }
+document.addEventListener('click', closeAuthor);
+
+/* Atajos */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeAuthor(); closeConfirm(); }
+  if (e.key === 'Escape' && activeModalId) closeModal();
+  if (e.key === '/' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) && !activeModalId) { e.preventDefault(); $('searchInput').focus(); }
+});
+
+/* ───────── Init ───────── */
+(function init() {
+  applyTheme(safe.get(THEME, 'dark'));
+  renderAuthor();
+  $('rateLbl').textContent = CLP_RATE.toLocaleString('es-CL');
+  $('vendorSelect').innerHTML = '<option value="ALL">Todos los proveedores</option>' + VENDORS.map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`).join('');
+  syncControls(); render();
+})();
+</script>
+</body>
+</html>
