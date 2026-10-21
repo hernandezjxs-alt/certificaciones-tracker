@@ -358,12 +358,21 @@
       <div><small>💵 Examen</small><b id="mPrice" style="color:var(--ok)"></b></div>
       <div><small>📅 Ritmo</small><b id="mPace"></b></div>
     </div>
+    <div class="box info" id="mInfo2" hidden>
+      <div><small>🕒 Duración del examen</small><b id="mExam"></b></div>
+      <div><small>🌐 Idioma del examen</small><b id="mLang"></b></div>
+    </div>
+    <div class="box" id="mNote" hidden></div>
     <h5><i class="fa-solid fa-up-right-from-square"></i> Enlaces oficiales y recursos</h5>
     <div class="links">
       <a id="mLo" target="_blank" rel="noopener" style="--c2:var(--primary)"><span><i class="fa-solid fa-certificate"></i> Examen oficial</span><i class="fa-solid fa-arrow-right"></i></a>
       <a id="mLd" target="_blank" rel="noopener" style="--c2:#0891b2"><span><i class="fa-solid fa-book-open"></i> Guía de estudio</span><i class="fa-solid fa-arrow-right"></i></a>
       <a id="mLy" target="_blank" rel="noopener" style="--c2:#dc2626"><span><i class="fa-brands fa-youtube"></i> YouTube</span><i class="fa-solid fa-arrow-right"></i></a>
       <a id="mLu" target="_blank" rel="noopener" style="--c2:#9333ea"><span><i class="fa-solid fa-graduation-cap"></i> Cursos Udemy</span><i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div id="mExtraWrap" hidden>
+      <h5><i class="fa-solid fa-link"></i> Recursos adicionales</h5>
+      <div class="links" id="mExtra"></div>
     </div>
     <div class="form">
       <div><label for="mStatus">Estado</label>
@@ -479,6 +488,95 @@ const certsCatalog = [
   timeEst: '40-60 h', days: '~25 días', months: '~1.0 meses',
   desc: `Certificación oficial de nivel ${level.toLowerCase()} ofrecida por ${vendor} para especialistas en Analytics y Cloud.`
 })));
+
+
+/* ───────── Certificaciones de Google Cloud (fuente: páginas oficiales cloud.google.com/learn/certification) ───────── */
+const GF = 'https://services.google.com/fh/files/misc/';
+const CSB = 'https://www.cloudskillsboost.google/paths/';
+const CSP = 'https://partner.cloudskillsboost.google/paths/';
+const FORM = 'https://docs.google.com/forms/d/e/';
+const GCP_SPECS = [
+  { id:'GCP-GENAI', code:'GenAI Leader', title:'Generative AI Leader', level:'FUNDAMENTALS', usd:99, exam:'90 min', lang:'ES', h:20,
+    desc:'Valida conocimientos de IA generativa para líderes: conceptos clave, productos de Google Cloud y uso responsable de la IA.',
+    slug:'generative-ai-leader', path:CSB+'1951', partner:CSP+'1952', guide:GF+'generative_ai_leader_exam_guide_english.pdf',
+    study:GF+'generative_ai_leader_study_guide_english.pdf', es:true,
+    notes:'Examen disponible en español.' },
+  { id:'GCP-CDL', code:'Cloud Digital Leader', title:'Cloud Digital Leader', level:'FUNDAMENTALS', usd:99, exam:'90 min', lang:'ES', h:25,
+    desc:'Comprensión de la transformación digital con la nube de Google y de cómo sus productos responden a necesidades de negocio. Sin requisitos técnicos.',
+    slug:'cloud-digital-leader', path:CSB+'9', partner:CSP+'75', guide:GF+'cloud_digital_leader_exam_guide_english.pdf',
+    study:GF+'cloud_digital_leader_study_guide_english.pdf', sample:FORM+'1FAIpQLSedAmf77MGS7FGEaylFzY51KtBd7kkIZJIMDsV5zSRSmpKIOA/viewform', es:true,
+    notes:'Examen disponible en español. Ojo con las fechas: la versión nueva del examen en español sale el 29 de octubre, y la guía nueva en español aplica si lo rindes desde ese día.' },
+  { id:'EXTRA-17-GCP-ACE', code:'GCP-ACE', title:'Associate Cloud Engineer', level:'ASOCIADO', usd:125, exam:'2 h', lang:'ES', h:60,
+    desc:'Implementación, despliegue y mantenimiento de soluciones en Google Cloud: proyectos, redes, cómputo, almacenamiento e IAM.',
+    slug:'cloud-engineer', path:CSB+'11', partner:CSP+'69', guide:GF+'associate_cloud_engineer_exam_guide_english.pdf',
+    sample:FORM+'1FAIpQLSfexWKtXT2OSFJ-obA4iT3GmzgiOCGvjrT9OfxilWC1yPtmfQ/viewform', es:true,
+    notes:'Examen en español. La guía nueva en español aplica desde el 28 de septiembre. No hay estudio no oficial en español confirmado, salvo el curso de preparación de Udemy.' },
+  { id:'GCP-ADP', code:'GCP-ADP', title:'Associate Data Practitioner', level:'ASOCIADO', usd:125, exam:'2 h', lang:'EN', h:50,
+    desc:'Ingesta, transformación, análisis y gobierno de datos con BigQuery y otros servicios de datos de Google Cloud, a nivel asociado.',
+    slug:'data-practitioner', path:CSB+'1336', partner:CSP+'1337', guide:GF+'v1.0_associate_data_practitioner_exam_guide_english.pdf',
+    sample:FORM+'1FAIpQLScnT9BGAkP_XzaGCtpUqKktIXhr65VkeJrxEL4jT3cMvwYZmw/viewform?resourcekey=0-xKV2_Z4rEIoOmLOAi8LlAA',
+    notes:'Solo en inglés. No oficial: simulacros en Udemy y un resumen de la comunidad.' },
+  { id:'GCP-WSA', code:'GCP-WS Admin', title:'Associate Google Workspace Administrator', level:'ASOCIADO', usd:125, exam:'2 h', lang:'EN', h:50,
+    desc:'Administración de Google Workspace: usuarios, seguridad, correo, dispositivos y colaboración.',
+    slug:'google-workspace-administrator', path:CSB+'24', partner:CSP+'90', guide:GF+'associate_google_workspace_administrator_exam_guide_english.pdf',
+    notes:'Solo en inglés.' },
+  { id:'GCP-PCD', code:'GCP-PCD', title:'Professional Cloud Developer', level:'PROFESIONAL', usd:200, exam:'2 h', lang:'EN', h:80,
+    desc:'Diseño, construcción y despliegue de aplicaciones escalables, seguras y nativas de la nube en Google Cloud.',
+    slug:'cloud-developer', path:CSB+'19', partner:CSP+'82', guide:GF+'professional_cloud_developer_exam_guide_english.pdf',
+    sample:FORM+'1FAIpQLSfFeB8zBNi2q-ar0V7iIguhk2e6P-UkrJ8OJfg6n0k6HcYLDQ/viewform', notes:'Solo en inglés.' },
+  { id:'GCP-PCDO', code:'GCP-DevOps', title:'Professional Cloud DevOps Engineer', level:'PROFESIONAL', usd:200, exam:'2 h', lang:'EN', h:80,
+    desc:'Prácticas SRE, CI/CD, observabilidad y confiabilidad de servicios en Google Cloud.',
+    slug:'cloud-devops-engineer', path:CSB+'20', partner:'https://partner.skills.google/paths/83', guide:GF+'professional_cloud_devops_engineer_exam_guide_english.pdf',
+    sample:FORM+'1FAIpQLSdpk564uiDvdnqqyPoVjgpBp0TEtgScSFuDV7YQvRSumwUyoQ/viewform', notes:'Solo en inglés.' },
+  { id:'GCP-PDA', slug:'data-engineer', path:CSB+'16', partner:CSP+'85', exam:'2 h', lang:'EN', guide:GF+'professional_data_engineer_exam_guide_english.pdf',
+    sample:FORM+'1FAIpQLSfkWEzBCP0wQ09ZuFm7G2_4qtkYbfmk_0getojdnPdCYmq37Q/viewform',
+    notes:'Solo en inglés. Estudio en español: curso de Coursera dictado en español y una guía de la comunidad.' },
+  { id:'EXTRA-1-GCP-MLE', title:'Professional Machine Learning Engineer', code:'GCP-PMLE', slug:'machine-learning-engineer', path:CSB+'17', partner:CSP+'84', exam:'2 h', lang:'EN',
+    guide:GF+'professional_machine_learning_engineer_exam_guide_english_new.pdf', sample:FORM+'1FAIpQLSeYmkCANE81qSBqLW0g2X7RoskBX9yGYQu-m1TtsjMvHabGqg/viewform',
+    notes:'Solo en inglés. No oficial: libro de Wiley (anterior a la actualización del examen).' },
+  { id:'GCP-PCSE', code:'GCP-PCSE', title:'Professional Cloud Security Engineer', level:'PROFESIONAL', usd:200, exam:'2 h', lang:'EN', h:80,
+    desc:'Diseño e implementación de infraestructura segura en Google Cloud: identidad, protección de datos, red y cumplimiento.',
+    slug:'cloud-security-engineer', path:CSB+'15', partner:CSP+'79', guide:GF+'professional_cloud_security_engineer_exam_guide_english.pdf',
+    sample:FORM+'1FAIpQLSfSuKEE8cUQWj9sfak7QG9hpaljBC89Y22KoWMQFgoECZjzUg/viewform', notes:'Solo en inglés.' },
+  { id:'GCP-PCNE', code:'GCP-PCNE', title:'Professional Cloud Network Engineer', level:'PROFESIONAL', usd:200, exam:'2 h', lang:'EN', h:80,
+    desc:'Diseño, implementación y gestión de arquitecturas de red en Google Cloud: VPC, conectividad híbrida y balanceo de carga.',
+    slug:'cloud-network-engineer', path:CSB+'14', partner:CSP+'78', guide:GF+'042426_professional_cloud_network_engineer_exam_guide_english.pdf',
+    sample:FORM+'1FAIpQLServ0tNGkr-dYAfmez_Gdk74dmVypZjzUKrkVFtFcArzhmPow/viewform', notes:'Solo en inglés.' },
+  { id:'EXTRA-18-GCP-PCA', title:'Professional Cloud Architect', code:'GCP-PCA', slug:'cloud-architect', path:CSB+'12', partner:CSP+'77', exam:'2 h', lang:'EN',
+    guide:GF+'professional_cloud_architect_exam_guide_english.pdf', sample:FORM+'1FAIpQLSf54f7FbtSJcXUY6-DUHfBG31jZ3pujgb8-a5io_9biJsNpqg/viewform?usp=sf_link',
+    notes:'Solo en inglés. Estudio en español: curso de Coursera dictado en español y una guía de la comunidad.' },
+  { id:'GCP-CDA', slug:'cloud-database-engineer', path:CSB+'22', partner:CSP+'81', exam:'2 h', lang:'EN', guide:GF+'professional_cloud_database_engineer_exam_guide_english.pdf',
+    sample:FORM+'1FAIpQLSe55cAg8a3NzgV_QCJ2_F75NAyE44Z-XuVB6oPJXaWnI5UBIQ/viewform', notes:'Solo en inglés.' },
+  { id:'GCP-PSOE', code:'GCP-SecOps', title:'Professional Security Operations Engineer', level:'PROFESIONAL', usd:200, exam:'2 h', lang:'EN', h:80,
+    desc:'Detección, investigación y respuesta a amenazas con Google SecOps y las herramientas de seguridad de Google Cloud.',
+    slug:'security-operations-engineer', path:CSB+'2150', partner:CSP+'2151', guide:GF+'professional_security_operations_engineer_exam_guide_english.pdf',
+    sample:FORM+'1FAIpQLScryxTOcaqWaPwxsQ-yjq29xRpYGpsAdy9L0XtIXtZy0s3miQ/viewform', notes:'Solo en inglés.' },
+  { id:'GCP-PAA', code:'GCP-Agentic', title:'Professional Agentic Architect', level:'PROFESIONAL', usd:200, exam:'3 h + labs', lang:'EN', h:80,
+    desc:'Diseño de arquitecturas de agentes de IA en Google Cloud. Examen con laboratorios prácticos.',
+    slug:'agentic-architect', path:'https://www.skills.google/paths/4525', partner:'https://partner.skills.google/paths/4531', guide:GF+'professional_agentic_architect_exam_guide_english.pdf',
+    sample:'https://docs.google.com/forms/d/1fi1gqbWsNCFxm1CT9V-JNGff1lyqfU9kNWAaaQMvRi4/preview',
+    notes:'Solo en inglés. En beta cuesta $120 USD (precio normal $200 USD), dura 3 h más laboratorios. La versión definitiva sale desde mediados de noviembre.' }
+];
+GCP_SPECS.forEach(g => {
+  const base = 'https://cloud.google.com/learn/certification/' + g.slug;
+  const extras = [['Ruta de aprendizaje', g.path], ['Ruta para partners', g.partner]];
+  if (g.sample) extras.push(['Preguntas de muestra', g.sample]);
+  if (g.study) extras.push(['Guía de estudio oficial', g.study]);
+  if (g.es) extras.push(['Página oficial en español', base + '?hl=es']);
+  const common = { officialLink: base, docsLink: g.guide, examDuration: g.exam, examLang: g.lang, extras, notes: g.notes };
+  let c = certsCatalog.find(x => x.id === g.id);
+  if (c) {   // ya estaba: se completa con detalles y enlaces oficiales
+    Object.assign(c, common);
+    ['title', 'code'].forEach(k => { if (g[k]) c[k] = g[k]; });
+  } else {
+    const days = Math.round(g.h / 2);
+    certsCatalog.push(C(Object.assign({
+      id: g.id, code: g.code, title: g.title, vendor: 'Google Cloud', level: g.level, role: 'google-analyst', usdPrice: g.usd,
+      timeEst: g.h + ' h', days: '~' + days + ' días', months: '~' + (days / 20).toFixed(1) + ' meses', desc: g.desc,
+      q: g.title
+    }, common)));
+  }
+});
 
 /* Horas promedio de la estimación ("30-50 h" → 40) */
 certsCatalog.forEach(c => {
@@ -628,6 +726,7 @@ function cardHTML(c) {
       <span class="pill price">${usd(c.usdPrice)} USD</span>
       <span class="pill">~${clp(c.usdPrice)} CLP</span>
       <span class="pill"><i class="fa-regular fa-clock"></i> ${esc(c.timeEst)}</span>
+      ${c.examLang ? `<span class="pill" title="Idioma del examen"><i class="fa-solid fa-language"></i> ${c.examLang === 'ES' ? 'Español' : 'Inglés'}</span>` : ''}
       ${dateChip(c, p)}
     </div>
     <div class="res">
@@ -748,6 +847,11 @@ function openModal(id) {
   $('mPrice').textContent = `${usd(c.usdPrice)} USD (~${clp(c.usdPrice)} CLP)`;
   $('mPace').textContent = `${c.days} · ${c.months}`;
   $('mLo').href = c.officialLink; $('mLd').href = c.docsLink; $('mLy').href = c.youtubeLink; $('mLu').href = c.udemyLink;
+  $('mInfo2').hidden = !c.examDuration;
+  if (c.examDuration) { $('mExam').textContent = c.examDuration; $('mLang').textContent = c.examLang === 'ES' ? 'Español' : 'Inglés'; }
+  $('mNote').hidden = !c.notes; $('mNote').textContent = c.notes || '';
+  $('mExtraWrap').hidden = !(c.extras && c.extras.length);
+  $('mExtra').innerHTML = (c.extras || []).map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener" style="--c2:var(--primary)"><span><i class="fa-solid fa-link"></i> ${esc(l)}</span><i class="fa-solid fa-arrow-right"></i></a>`).join('');
   $('mStatus').value = p.status; $('mResp').value = ''; draftPeople = p.people.slice(); renderPeople();
   $('mDate').value = p.targetDate || '';
   draftLog = logOf(p); $('lDate').value = today(); $('lPerson').value = ''; $('lText').value = ''; renderLog();
