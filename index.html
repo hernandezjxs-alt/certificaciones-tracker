@@ -174,6 +174,16 @@
   .status-seg button.on[data-s="COMPLETED"] { background: var(--ok-soft); color: var(--ok); }
   .details-btn { font-size: 12px; font-weight: 700; color: var(--primary); background: none; border: 0; display: inline-flex; gap: 5px; align-items: center; white-space: nowrap; }
   .details-btn:hover { text-decoration: underline; }
+  .top-right { display: flex; align-items: center; gap: 8px; }
+  .star { border: 0; background: none; padding: 2px 3px; font-size: 17px; line-height: 1; color: var(--faint); border-radius: 6px; transition: .15s; }
+  .star:hover { color: #f59e0b; transform: scale(1.15); }
+  .star.on { color: #f59e0b; }
+  .fav-filter { display: inline-flex; align-items: center; gap: 7px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 9px 13px; font-weight: 600; font-size: 13px; color: var(--text); }
+  .fav-filter span { font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 999px; background: var(--border); color: var(--muted); }
+  .fav-filter:hover { border-color: #f59e0b; }
+  .fav-filter.on { background: #f59e0b; border-color: #f59e0b; color: #1c1300; }
+  .fav-filter.on span { background: rgba(0,0,0,.18); color: #1c1300; }
+  .fav-filter i { color: #f59e0b; } .fav-filter.on i { color: #1c1300; }
   .owner { font-size: 11px; color: var(--faint); display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
   .owner > span:last-child { white-space: nowrap; }
   .people { display: flex; flex-wrap: wrap; gap: 5px; }
@@ -329,8 +339,9 @@
     </select>
     <select class="field" id="personSelect" onchange="onFilter()" aria-label="Persona que la cursa"></select>
     <select class="field" id="sortSelect" onchange="onFilter()" aria-label="Ordenar">
-      <option value="catalog">Orden: catálogo</option><option value="name">Nombre A–Z</option><option value="priceAsc">Precio ↑</option><option value="priceDesc">Precio ↓</option><option value="hoursAsc">Menos horas primero</option><option value="status">Por estado</option>
+      <option value="catalog">Orden: catálogo</option><option value="name">Nombre A–Z</option><option value="priceAsc">Precio ↑</option><option value="priceDesc">Precio ↓</option><option value="hoursAsc">Menos horas primero</option><option value="status">Por estado</option><option value="fav">Favoritas primero</option>
     </select>
+    <button type="button" class="fav-filter" id="favFilter" onclick="toggleFavFilter()" aria-pressed="false"></button>
     <div class="seg" role="group" aria-label="Vista">
       <button id="v-GRID" onclick="setView('GRID')"><i class="fa-solid fa-border-all"></i><span>Tarjetas</span></button>
       <button id="v-MATRIX" onclick="setView('MATRIX')"><i class="fa-solid fa-table-cells"></i><span>Matriz por roles</span></button>
@@ -591,7 +602,7 @@ const safe = {
 };
 let userProgress = safe.get(STORE, {});
 /* Siempre se inicia en tarjetas y mostrando todo; los filtros no se recuerdan */
-let prefs = { role: 'ALL', view: 'GRID', vendor: 'ALL', status: 'ALL', person: 'ALL', sort: 'catalog' };
+let prefs = { fav: false, role: 'ALL', view: 'GRID', vendor: 'ALL', status: 'ALL', person: 'ALL', sort: 'catalog' };
 let activeModalId = null, lastFocus = null, draftLog = [], draftPeople = [];
 
 const $ = id => document.getElementById(id);
@@ -599,7 +610,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({ '&':'&amp;','<':'&l
 const usd = n => '$' + n.toLocaleString('es-CL');
 const clp = n => '$' + Math.round(n * CLP_RATE).toLocaleString('es-CL');
 const getProg = id => {
-  const p = Object.assign({ status: 'TODO', responsible: DEFAULT_OWNER, notes: '', targetDate: '', log: [] }, userProgress[id]);
+  const p = Object.assign({ status: 'TODO', responsible: DEFAULT_OWNER, notes: '', targetDate: '', log: [], fav: false }, userProgress[id]);
   if (!Array.isArray(p.people)) p.people = String(p.responsible || '').split(/[,;]/);
   p.people = p.people.map(x => String(x).trim()).filter(x => x && x !== LEGACY_OWNER);
   p.responsible = p.people.join(', ');
@@ -634,6 +645,7 @@ function getFiltered() {
   const items = certsCatalog.filter(c => {
     if (prefs.role !== 'ALL' && c.role !== prefs.role) return false;
     if (prefs.vendor !== 'ALL' && c.vendor !== prefs.vendor) return false;
+    if (prefs.fav && !getProg(c.id).fav) return false;
     if (prefs.status !== 'ALL' && getProg(c.id).status !== prefs.status) return false;
     if (prefs.person !== 'ALL') {
       const ppl = getProg(c.id).people;
@@ -646,6 +658,7 @@ function getFiltered() {
     priceAsc: (a, b) => a.usdPrice - b.usdPrice,
     priceDesc: (a, b) => b.usdPrice - a.usdPrice,
     hoursAsc: (a, b) => a.hours - b.hours,
+    fav: (a, b) => Number(!!getProg(b.id).fav) - Number(!!getProg(a.id).fav),
     status: (a, b) => rank[getProg(a.id).status] - rank[getProg(b.id).status]
   };
   if (sorters[prefs.sort]) items.sort(sorters[prefs.sort]);
@@ -660,7 +673,7 @@ function onFilter() {
 function setRole(r) { prefs.role = r; render(); }
 function setView(v) { prefs.view = v; render(); }
 function clearFilters() {
-  prefs.role = 'ALL'; prefs.vendor = 'ALL'; prefs.status = 'ALL'; prefs.person = 'ALL';
+  prefs.role = 'ALL'; prefs.vendor = 'ALL'; prefs.status = 'ALL'; prefs.person = 'ALL'; prefs.fav = false;
   $('searchInput').value = ''; syncControls(); render();
 }
 /* Opciones del filtro de personas: todas las que aparecen en alguna certificación */
@@ -713,13 +726,31 @@ function lastNoteHTML(p) {
   return `<div class="last-note"><i class="fa-regular fa-comment"></i> <b>${esc(e.person)}</b>${e.date ? ' · ' + fmtDate(e.date) : ''}: ${esc(e.text)}</div>`;
 }
 
+function starBtn(c, p) {
+  return `<button type="button" class="star ${p.fav ? 'on' : ''}" aria-pressed="${!!p.fav}" title="${p.fav ? 'Quitar de favoritas' : 'Marcar como favorita'}" aria-label="${p.fav ? 'Quitar de favoritas' : 'Marcar como favorita'}: ${esc(c.code)}" onclick="toggleFav('${c.id}')"><i class="${p.fav ? 'fa-solid' : 'fa-regular'} fa-star"></i></button>`;
+}
+function toggleFav(id) {
+  const c = certsCatalog.find(x => x.id === id); if (!c) return;
+  const p = getProg(id), fav = !p.fav;
+  userProgress[id] = Object.assign({}, p, { fav });
+  saveState(); render();
+  toast(fav ? `${c.code} agregada a favoritas` : `${c.code} quitada de favoritas`, 'fa-star');
+}
+function toggleFavFilter() { prefs.fav = !prefs.fav; render(); }
+function updateFavButton() {
+  const n = certsCatalog.filter(c => getProg(c.id).fav).length;
+  const b = $('favFilter');
+  b.classList.toggle('on', prefs.fav); b.setAttribute('aria-pressed', String(prefs.fav));
+  b.innerHTML = `<i class="${prefs.fav ? 'fa-solid' : 'fa-regular'} fa-star"></i> Favoritas <span>${n}</span>`;
+}
+
 function cardHTML(c) {
   const p = getProg(c.id), r = ROLES[c.role];
   return `
   <article class="card ${p.status === 'COMPLETED' ? 'done' : ''}" style="--c:${r.color}">
     <div class="card-top">
       <div class="code-wrap">${vendorIcon(c.vendor)}<span class="code" title="${esc(c.code)}">${esc(c.code)}</span></div>
-      <span class="level ${esc(c.level)}">${esc(c.level)}</span>
+      <div class="top-right"><span class="level ${esc(c.level)}">${esc(c.level)}</span>${starBtn(c, p)}</div>
     </div>
     <div><h3>${esc(c.title)}</h3><p class="desc" style="margin-top:4px">${esc(c.desc)}</p></div>
     <div class="pills">
@@ -758,7 +789,7 @@ function renderMatrix(items) {
     const rows = list.map(c => {
       const p = getProg(c.id);
       return `<tr>
-        <td class="mono">${esc(c.code)}</td><td><b>${esc(c.title)}</b></td><td>${esc(c.vendor)}</td>
+        <td class="mono">${starBtn(c, p)} ${esc(c.code)}</td><td><b>${esc(c.title)}</b></td><td>${esc(c.vendor)}</td>
         <td style="color:var(--ok);font-weight:700">${usd(c.usdPrice)} <span style="color:var(--muted);font-weight:500">(~${clp(c.usdPrice)})</span></td>
         <td>${esc(c.timeEst)}</td><td>${statusSeg(c, p)}</td>
         <td style="text-align:right"><button class="details-btn" onclick="openModal('${c.id}')">Abrir ficha →</button></td></tr>`;
@@ -771,13 +802,13 @@ function renderMatrix(items) {
 
 /* ───────── Render principal ───────── */
 function render() {
-  updatePersonOptions();
+  updatePersonOptions(); updateFavButton();
   const items = getFiltered();
   const views = { GRID: 'gridContainer', MATRIX: 'matrixContainer' };
   Object.entries(views).forEach(([v, id]) => { $(id).hidden = v !== prefs.view; $('v-' + v).classList.toggle('on', v === prefs.view); });
   if (prefs.view === 'GRID') renderGrid(items); else renderMatrix(items);
 
-  const filtered = prefs.role !== 'ALL' || prefs.vendor !== 'ALL' || prefs.status !== 'ALL' || prefs.person !== 'ALL' || $('searchInput').value.trim();
+  const filtered = prefs.role !== 'ALL' || prefs.vendor !== 'ALL' || prefs.status !== 'ALL' || prefs.person !== 'ALL' || prefs.fav || $('searchInput').value.trim();
   $('resultCount').textContent = `Mostrando ${items.length} de ${certsCatalog.length} certificaciones`;
   $('clearBtn').hidden = !filtered;
   renderChips(); renderRoleProgress(); updateKPIs();
@@ -893,7 +924,7 @@ function saveModal() {
   if ($('lText').value.trim()) addLogEntry();
   userProgress[activeModalId] = {
     status: $('mStatus').value, people: draftPeople, responsible: draftPeople.join(', '),
-    notes: '', targetDate: $('mDate').value, log: draftLog
+    notes: '', targetDate: $('mDate').value, log: draftLog, fav: !!getProg(activeModalId).fav
   };
   saveState(); closeModal(); render(); toast('Cambios guardados');
 }
@@ -918,7 +949,7 @@ function importJSON(e) {
         const v = data[c.id]; if (!v || typeof v !== 'object') return;
         clean[c.id] = {
           status: STATUS[v.status] ? v.status : 'TODO', responsible: String(v.responsible || DEFAULT_OWNER), people: Array.isArray(v.people) ? v.people.map(String) : undefined,
-          notes: String(v.notes || ''), log: (Array.isArray(v.log) ? v.log : []).filter(e => e && e.text).map(e => ({ date: /^\d{4}-\d{2}-\d{2}$/.test(e.date || '') ? e.date : '', person: String(e.person || ''), text: String(e.text) })), targetDate: /^\d{4}-\d{2}-\d{2}$/.test(v.targetDate || '') ? v.targetDate : ''
+          notes: String(v.notes || ''), fav: !!v.fav, log: (Array.isArray(v.log) ? v.log : []).filter(e => e && e.text).map(e => ({ date: /^\d{4}-\d{2}-\d{2}$/.test(e.date || '') ? e.date : '', person: String(e.person || ''), text: String(e.text) })), targetDate: /^\d{4}-\d{2}-\d{2}$/.test(v.targetDate || '') ? v.targetDate : ''
         }; n++;
       });
       userProgress = clean; saveState(); render(); toast(`Importadas ${n} certificaciones`);
